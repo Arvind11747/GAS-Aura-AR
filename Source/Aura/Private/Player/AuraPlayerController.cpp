@@ -5,12 +5,70 @@
 
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "Interface/Interaction/EnemyInterface.h"
 
 
 AAuraPlayerController::AAuraPlayerController()
 {
 	bReplicates = true;
 }
+
+void AAuraPlayerController::PlayerTick(float DeltaTime)
+{
+	Super::PlayerTick(DeltaTime);
+
+	CursorTrace();
+}
+
+
+
+void AAuraPlayerController::CursorTrace()
+{
+	FHitResult CursorHit;
+	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
+	if (!CursorHit.bBlockingHit) return;
+
+	LastActor = ThisActor;
+	ThisActor = Cast<IEnemyInterface>(CursorHit.GetActor());
+
+	/* Cases
+	* 1. LastActor is not Valid, ThisActor is not Valid
+	*		-- Do nothing
+	* 2. LastActor is not Valid, ThisActor is Valid
+	*		-- Highlight ThisActor
+	* 3. LastActor is Valid, ThisActor is not Valid.
+	*		-- Unhighlight LastActor
+	* 4. LastActor is Valid, ThisActor is Valid, but are not the same actors
+	*		-- Unhighlight LastActor and Highlight ThisActor
+	* 5. LastActor is Valid, ThisActor is Valid, and both are the same actors
+	*		-- Do nothing
+	*/
+
+	if (LastActor == nullptr)
+	{
+		if (ThisActor != nullptr)
+		{
+			ThisActor->HighlightActor(); // Case 2
+		}
+	}
+	else
+	{
+		if (ThisActor == nullptr)
+		{
+			LastActor->UnHighlightActor(); // Case 3
+		}
+		else
+		{
+			if (ThisActor != LastActor) // Case 4
+			{
+				LastActor->UnHighlightActor();
+				ThisActor->HighlightActor();
+			}
+		}
+	}
+}
+
+
 
 void AAuraPlayerController::BeginPlay()
 {
