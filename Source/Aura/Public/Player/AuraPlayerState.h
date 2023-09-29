@@ -22,7 +22,7 @@ public:
 	// Inherited via IAbilitySystemInterface
 	UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
-	UAttributeSet* GetAttributeSet() const;
+	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
 protected:
 	UPROPERTY()
