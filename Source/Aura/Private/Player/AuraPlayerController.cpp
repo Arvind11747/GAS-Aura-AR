@@ -21,7 +21,6 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 }
 
 
-
 void AAuraPlayerController::CursorTrace()
 {
 	FHitResult CursorHit;
@@ -65,8 +64,6 @@ void AAuraPlayerController::CursorTrace()
 		ThisActor->HighlightActor();
 	}
 }
-
-
 
 void AAuraPlayerController::BeginPlay()
 {

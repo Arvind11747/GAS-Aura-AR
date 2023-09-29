@@ -15,20 +15,15 @@ class AURA_API AAuraEnemy : public AAuraCharacterBase, public IEnemyInterface
 {
 	GENERATED_BODY()
 
-public:
-
-	AAuraEnemy();
-
-private:
+protected:
 	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
 
 public:
 
+	AAuraEnemy();
+
 	// Inherited via IEnemyInterface
 	void HighlightActor() override;
-
 	void UnHighlightActor() override;
-
-
 };
