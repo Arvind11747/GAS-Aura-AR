@@ -3,27 +3,44 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
 #include "Engine/SkeletalMeshSocket.h"
 
 #include "AuraCharacterBase.generated.h"
 
-class USkeletalMeshSocket;
+
+class UAbilitySystemComponent;
+class UAttributeSet;
+
+
+//class USkeletalMeshSocket;
 
 UCLASS(Abstract)
 
-class AURA_API AAuraCharacterBase : public ACharacter
+class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
 	AAuraCharacterBase();
 
+	// Inherited via IAbilitySystemInterface
+	UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+	UAttributeSet* GetAttributeSet() const;
+
 protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapon;
+
+	UPROPERTY()
+	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
+
+	UPROPERTY()
+	TObjectPtr<UAttributeSet> AttributeSet;
 
 	//UPROPERTY(EditAnywhere, Category = "Combat", meta = (GetOptions = "GetSocketList"))
 	//FName WeaponSocket;
@@ -47,5 +64,7 @@ protected:
 
 	//	return SocketNames;
 	//}
+
+
 
 };
