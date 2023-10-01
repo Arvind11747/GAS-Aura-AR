@@ -43,26 +43,19 @@ void AAuraPlayerController::CursorTrace()
 	*		-- Do nothing
 	*/
 
-	if (!LastActor)
+	if (ThisActor != LastActor) // Case 4
 	{
 		if (ThisActor)
 		{
 			ThisActor->HighlightActor(); // Case 2
 		}
-		return;
+
+		if (LastActor)
+		{
+			LastActor->UnHighlightActor(); // Case 3
+		}
 	}
 
-	if (!ThisActor)
-	{
-		LastActor->UnHighlightActor(); // Case 3
-		return;
-	}
-
-	if (ThisActor != LastActor) // Case 4
-	{
-		LastActor->UnHighlightActor();
-		ThisActor->HighlightActor();
-	}
 }
 
 void AAuraPlayerController::BeginPlay()
@@ -71,9 +64,8 @@ void AAuraPlayerController::BeginPlay()
 
 	check(AuraContext);
 
-
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
-	check(Subsystem);
+	if (!Subsystem) return;
 
 	Subsystem->AddMappingContext(AuraContext, 0);
 
