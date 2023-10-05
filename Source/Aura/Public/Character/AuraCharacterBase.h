@@ -42,6 +42,8 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 
+	virtual void InitAbilityActorInfo();
+
 	//UPROPERTY(EditAnywhere, Category = "Combat", meta = (GetOptions = "GetSocketList"))
 	//FName WeaponSocket;
 
@@ -64,7 +66,5 @@ protected:
 
 	//	return SocketNames;
 	//}
-
-
 
 };

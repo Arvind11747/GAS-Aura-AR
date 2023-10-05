@@ -18,6 +18,7 @@ class AURA_API AAuraEnemy : public AAuraCharacterBase, public IEnemyInterface
 protected:
 	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
+	virtual void InitAbilityActorInfo() override;
 
 public:
 
