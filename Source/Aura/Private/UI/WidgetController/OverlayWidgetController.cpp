@@ -28,11 +28,12 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	//This is the normal way
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AuraAttributeSet->GetHealthAttribute()).AddUObject(this, &UOverlayWidgetController::HealthChanged);
 
-	//This is the stupid way
-	BIND_ATTRIBUTE_DELEGATE(UOverlayWidgetController, AbilitySystemComponent, AuraAttributeSet, MaxHealth);
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AuraAttributeSet->GetMaxHealthAttribute()).AddUObject(this, &UOverlayWidgetController::MaxHealthChanged);
 
-	BIND_ATTRIBUTE_DELEGATE(UOverlayWidgetController, AbilitySystemComponent, AuraAttributeSet, Mana);
-	BIND_ATTRIBUTE_DELEGATE(UOverlayWidgetController, AbilitySystemComponent, AuraAttributeSet, MaxMana);
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AuraAttributeSet->GetManaAttribute()).AddUObject(this, &UOverlayWidgetController::ManaChanged);
+
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AuraAttributeSet->GetMaxManaAttribute()).AddUObject(this, &UOverlayWidgetController::MaxManaChanged);
+
 
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda
 	(
