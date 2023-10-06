@@ -2,7 +2,9 @@
 
 
 #include "UI/WidgetController/OverlayWidgetController.h"
+
 #include "AbilitySystem/AuraAttributeSet.h"
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
 
 //
 #define BIND_ATTRIBUTE_DELEGATE(ClassName, ASC, AS, AttributeName) \
@@ -19,7 +21,7 @@ void UOverlayWidgetController::BroadcastInitialValues()
 	OnMaxManaChanged.Broadcast(AuraAttributeSet->GetMaxMana());
 }
 
-void UOverlayWidgetController::BindCallbacksToDelegate()
+void UOverlayWidgetController::BindCallbacksToDependencies()
 {
 	const UAuraAttributeSet* AuraAttributeSet = CastChecked<UAuraAttributeSet>(AttributeSet);
 
@@ -31,6 +33,18 @@ void UOverlayWidgetController::BindCallbacksToDelegate()
 
 	BIND_ATTRIBUTE_DELEGATE(UOverlayWidgetController, AbilitySystemComponent, AuraAttributeSet, Mana);
 	BIND_ATTRIBUTE_DELEGATE(UOverlayWidgetController, AbilitySystemComponent, AuraAttributeSet, MaxMana);
+
+	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda
+	(
+		[](const FGameplayTagContainer& TagContainer)
+		{
+			for (const FGameplayTag& Tag : TagContainer)
+			{
+				const FString Msg = FString::Printf(TEXT("GE Tag: %s"), *Tag.ToString());
+				GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, Msg);
+			}
+		}
+	);
 }
 
 void UOverlayWidgetController::HealthChanged(const FOnAttributeChangeData& Data) const
@@ -50,5 +64,5 @@ void UOverlayWidgetController::ManaChanged(const FOnAttributeChangeData& Data) c
 
 void UOverlayWidgetController::MaxManaChanged(const FOnAttributeChangeData& Data) const
 {
-	OnMaxManaChanged.Broadcast(Data.NewValue	);
+	OnMaxManaChanged.Broadcast(Data.NewValue);
 }
