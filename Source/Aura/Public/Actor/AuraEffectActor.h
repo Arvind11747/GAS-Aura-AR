@@ -10,14 +10,14 @@
 class UGameplayEffect;
 
 
-UENUM(BlueprintType)
-enum class EDurationTypeConfig : uint8
-{
-	Instant,
-	HasDuration,
-	Infinite,
-	Mixed
-};
+//UENUM(BlueprintType)
+//enum class EDurationTypeConfig : uint8
+//{
+//	Instant,
+//	HasDuration,
+//	Infinite,
+//	Mixed
+//};
 
 UENUM(BlueprintType)
 enum class EEffectApplicationPolicy
@@ -34,6 +34,23 @@ enum class EEffectRemovalPolicy
 	DoNotRemove
 };
 
+USTRUCT(BlueprintType)
+
+struct FAppliedGameplayEffect
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
+	TSubclassOf<UGameplayEffect> GameplayEffectClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
+	EEffectApplicationPolicy EffectApplicationPolicy = EEffectApplicationPolicy::DoNotApply;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
+	EEffectRemovalPolicy EffectRemovalPolicy = EEffectRemovalPolicy::DoNotRemove;
+
+};
+
 UCLASS()
 class AURA_API AAuraEffectActor : public AActor
 {
@@ -47,7 +64,8 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable)
-	void ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass);
+	void ApplyEffectToTarget(AActor* TargetActor, FAppliedGameplayEffect AppliedGameplayEffect);
+	void RemoveEffectToTarget(AActor* TargetActor);
 
 	UFUNCTION(BlueprintCallable)
 	void OnOverlap(AActor* TargetActor);
@@ -57,40 +75,15 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
 	bool bDestoryOnEffectRemoval = false;
-
-	UPROPERTY(EditAnywhere, Category = "Applied Effects")
-	EDurationTypeConfig DurationTypeConfig = EDurationTypeConfig::Instant;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects|Instant",
-		meta = (EditCondition = "DurationTypeConfig == EDurationTypeConfig::Instant || DurationTypeConfig == EDurationTypeConfig::Mixed", EditConditionHides))
-	TSubclassOf<UGameplayEffect> InstantGameplayEffectClass;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects|Instant",
-		meta = (EditCondition = "DurationTypeConfig == EDurationTypeConfig::Instant || DurationTypeConfig == EDurationTypeConfig::Mixed", EditConditionHides))
-	EEffectApplicationPolicy InstantEffectApplicationPolicy = EEffectApplicationPolicy::DoNotApply;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects|HasDuration",
-		meta = (EditCondition = "DurationTypeConfig == EDurationTypeConfig::HasDuration || DurationTypeConfig == EDurationTypeConfig::Mixed", EditConditionHides))
-	TSubclassOf<UGameplayEffect> DurationGameplayEffectClass;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects|HasDuration",
-		meta = (EditCondition = "DurationTypeConfig == EDurationTypeConfig::HasDuration || DurationTypeConfig == EDurationTypeConfig::Mixed", EditConditionHides))
-	EEffectApplicationPolicy DurationEffectApplicationPolicy = EEffectApplicationPolicy::DoNotApply;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects|Infinite",
-		meta = (EditCondition = "DurationTypeConfig == EDurationTypeConfig::Infinite|| DurationTypeConfig == EDurationTypeConfig::Mixed", EditConditionHides))
-	TSubclassOf<UGameplayEffect> InfiniteGameplayEffectClass;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects|Infinite",
-		meta = (EditCondition = "DurationTypeConfig == EDurationTypeConfig::Infinite|| DurationTypeConfig== EDurationTypeConfig::Mixed", EditConditionHides))
-	EEffectApplicationPolicy InfiniteEffectApplicationPolicy = EEffectApplicationPolicy::DoNotApply;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects|Infinite",
-		meta = (EditCondition = "DurationTypeConfig == EDurationTypeConfig::Infinite|| DurationTypeConfig== EDurationTypeConfig::Mixed", EditConditionHides))
-	EEffectRemovalPolicy InfiniteEffectRemovalPolicy = EEffectRemovalPolicy::RemoveOnEndOverlap;
-
-	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
+	TArray<FAppliedGameplayEffect> AppliedGameplayEffects;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
 	float ActorLevel = 1.f;
+
+	//UPROPERTY(EditAnywhere, Category = "Applied Effects")
+	//EDurationTypeConfig DurationTypeConfig = EDurationTypeConfig::Instant;
+
+
+	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
 };
