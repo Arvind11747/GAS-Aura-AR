@@ -18,7 +18,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetController(UObject* InWidgetController);
 
-
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UObject> WidgetController;
 
