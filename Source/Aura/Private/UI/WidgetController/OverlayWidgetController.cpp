@@ -3,8 +3,8 @@
 
 #include "UI/WidgetController/OverlayWidgetController.h"
 
-#include "AbilitySystem/AuraAttributeSet.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystem/AuraAttributeSet.h"
 
 //
 #define BIND_ATTRIBUTE_DELEGATE(ClassName, ASC, AS, AttributeName) \
@@ -41,11 +41,17 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 		{
 			for (const FGameplayTag& Tag : TagContainer)
 			{
-				const FString Msg = FString::Printf(TEXT("GE Tag: %s"), *Tag.ToString());
-				GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, Msg);
+				// Example, Say Tag = Message.HealthPotion
+				// "Message.HealthPotion".MatchesTag("Message") will return True, "Message".MatchesTag("Message.HealthPotion") will return False
+
+				FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(MessageTagName);
+				if (!Tag.MatchesTag(MessageTag)) return;
+
+				/*const FString Msg = FString::Printf(TEXT("GE Tag: %s"), *Tag.ToString());
+				GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, Msg);*/
 
 				FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag);
-
+				OnMessageWidgetRow.Broadcast(*Row);
 			}
 		}
 	);
