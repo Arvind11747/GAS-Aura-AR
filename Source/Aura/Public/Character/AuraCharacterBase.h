@@ -12,7 +12,7 @@
 
 class UAbilitySystemComponent;
 class UAttributeSet;
-
+class UGameplayEffect;
 
 //class USkeletalMeshSocket;
 
@@ -43,6 +43,12 @@ protected:
 	TObjectPtr<UAttributeSet> AttributeSet;
 
 	virtual void InitAbilityActorInfo();
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
+	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
+
+	UFUNCTION()
+	void InitializePrimaryAttributes() const;
 
 	//UPROPERTY(EditAnywhere, Category = "Combat", meta = (GetOptions = "GetSocketList"))
 	//FName WeaponSocket;
