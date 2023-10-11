@@ -53,7 +53,7 @@ void AAuraCharacter::InitAbilityActorInfo()
 
 	AbilitySystemComponent->InitAbilityActorInfo(AuraPlayerState, this);
 
-	InitializePrimaryAttributes();
+	InitializeDefaultAttributes();
 
 	//Init HUD
 	AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController());
