@@ -5,7 +5,6 @@
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "Interface/Interaction/CombatInterface.h"
 
-
 UMMC_MaxHealth::UMMC_MaxHealth()
 {
 	VigorDef.AttributeToCapture = UAuraAttributeSet::GetVigorAttribute();
@@ -13,7 +12,6 @@ UMMC_MaxHealth::UMMC_MaxHealth()
 	VigorDef.bSnapshot = false;
 
 	RelevantAttributesToCapture.Add(VigorDef);
-
 }
 
 float UMMC_MaxHealth::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const
@@ -34,5 +32,5 @@ float UMMC_MaxHealth::CalculateBaseMagnitude_Implementation(const FGameplayEffec
 	ICombatInterface* CombatInterface = Cast<ICombatInterface>(Spec.GetContext().GetSourceObject());
 	const int32 PlayerLevel = CombatInterface->GetPlayerLevel();
 
-	return 80.f + (Vigor * 2.5f) + (10.f * PlayerLevel);
+	return 80.f + (Vigor * 2.5f) + (PlayerLevel * 10.f);
 }
