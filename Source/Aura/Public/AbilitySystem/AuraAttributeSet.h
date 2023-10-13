@@ -8,8 +8,6 @@
 
 #include "AuraAttributeSet.generated.h"
 
-
-
 #define ATTRIBUTE_ACCESSORS(ClassName, PropertyName)\
 	GAMEPLAYATTRIBUTE_PROPERTY_GETTER(ClassName, PropertyName)\
 	GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName)\
@@ -52,6 +50,10 @@ struct FEffectProperties
 };
 
 
+//typedef is specific to the FGameplayAttribute() signature, but TStaticFuncPtr is generic to any signature
+//typedef TBaseStaticDelegateInstance<FGameplayAttribute(*)(), FDefaultDelegateUserPolicy>::FFuncPtr FAttributeFuncPtr;
+template<class T>
+using TStaticFuncPtr = typename TBaseStaticDelegateInstance<T, FDefaultDelegateUserPolicy>::FFuncPtr;
 /**
  *
  */
@@ -69,6 +71,8 @@ public:
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
+
+	TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes;
 
 	/*
 	* Vital Attributes
