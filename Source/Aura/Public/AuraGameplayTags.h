@@ -45,7 +45,16 @@ public:
 	FGameplayTag Attributes_Secondary_MaxMana;
 	FGameplayTag Attributes_Secondary_MaxHealth;
 
-protected:
+	//Input Tags
+	FGameplayTag Inputs_Mouse_LMB;
+	FGameplayTag Inputs_Mouse_RMB;
+
+	FGameplayTag Inputs_Keyboard_1;
+	FGameplayTag Inputs_Keyboard_2;
+	FGameplayTag Inputs_Keyboard_3;
+	FGameplayTag Inputs_Keyboard_4;
+	FGameplayTag Inputs_Keyboard_5;
+
 
 private:
 	static FAuraGameplayTags GameplayTags;
