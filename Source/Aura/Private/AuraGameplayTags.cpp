@@ -102,18 +102,22 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("Inputs.Keyboard.1"),
 		FString("Input tag for the number key 1")
 	);
+
 	GameplayTags.Inputs_Keyboard_2 = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Inputs.Keyboard.2"),
 		FString("Input tag for the number key 2")
 	);
+
 	GameplayTags.Inputs_Keyboard_3 = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Inputs.Keyboard.3"),
 		FString("Input tag for the number key 3")
 	);
+
 	GameplayTags.Inputs_Keyboard_4 = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Inputs.Keyboard.4"),
 		FString("Input tag for the number key 4")
 	);
+
 	GameplayTags.Inputs_Keyboard_5 = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Inputs.Keyboard.5"),
 		FString("Input tag for the number key 5")
