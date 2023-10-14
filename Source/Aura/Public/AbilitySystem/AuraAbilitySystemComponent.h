@@ -8,6 +8,8 @@
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTagsSignature, const FGameplayTagContainer& /*AssetTags*/)
 
+
+class UGameplayAbility;
 /**
  *
  */
@@ -19,6 +21,8 @@ public:
 	void AbilityActorInfoSet();
 
 	FEffectAssetTagsSignature EffectAssetTags;
+
+	void AddGameplayAbilities(const TArray<TSubclassOf<UGameplayAbility>>& NewAbilities);
 
 protected:
 	void EffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle GameplayEffectHandle);

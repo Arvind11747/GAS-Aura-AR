@@ -13,6 +13,7 @@
 class UAbilitySystemComponent;
 class UAttributeSet;
 class UGameplayEffect;
+class UGameplayAbility;
 
 //class USkeletalMeshSocket;
 
@@ -42,8 +43,6 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 
-	virtual void InitAbilityActorInfo();
-
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
 	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
 
@@ -53,32 +52,15 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
 	TSubclassOf<UGameplayEffect> DefaultSecondaryAttributes;
 
+	virtual void InitAbilityActorInfo();
+
 	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const;
 
 	void InitializeDefaultAttributes() const;
 
+	void AddCharacterAbilities();
 
-	//UPROPERTY(EditAnywhere, Category = "Combat", meta = (GetOptions = "GetSocketList"))
-	//FName WeaponSocket;
-
-	//UFUNCTION()
-	//TArray<FName> GetSocketList() const
-	//{
-	//	TArray<FName> SocketNames;
-
-	//	const TArray<USkeletalMeshSocket*> Sockets = GetMesh()->SkeletalMesh->GetActiveSocketList();
-
-	//	for (int32 SocketIdx = 0; SocketIdx < Sockets.Num(); ++SocketIdx)
-	//	{
-	//		SocketNames.Add(Sockets[SocketIdx]->SocketName);
-	//	}
-
-	//	if (SocketNames.IsEmpty())
-	//	{
-	//		UE_LOG(LogTemp, Warning, TEXT("NO SOCKETS FOUND!, Check The Skeleton for Sockets."));
-	//	}
-
-	//	return SocketNames;
-	//}
-
+private:
+	UPROPERTY(EditAnywhere, Category = "Abilities")
+	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
 };
