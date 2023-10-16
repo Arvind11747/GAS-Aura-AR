@@ -3,13 +3,15 @@
 
 #include "Player/AuraPlayerController.h"
 
-#include "EnhancedInputSubsystems.h"
-#include "Input/AuraInputComponent.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "EnhancedInputSubsystems.h"
+#include "NavigationSystem.h"
+#include "NavigationPath.h"
+#include "AuraGameplayTags.h"
+#include "Input/AuraInputComponent.h"
+#include "Components/SplineComponent.h"
 #include "Interface/Interaction/EnemyInterface.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
-#include "Components/SplineComponent.h"
-#include "AuraGameplayTags.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
@@ -117,8 +119,45 @@ void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
 	//GEngine->AddOnScreenDebugMessage(2, 3.f, FColor::Blue, *InputTag.ToString());
-	if (!GetASC()) return;
-	GetASC()->AbilityInputTagReleased(InputTag);
+	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().Inputs_Mouse_LMB))
+	{
+		if (GetASC())
+		{
+			GetASC()->AbilityInputTagReleased(InputTag);
+		}
+		return;
+	}
+	if (bTargeting)
+	{
+		if (GetASC())
+		{
+			GetASC()->AbilityInputTagReleased(InputTag);
+		}
+	}
+	else
+	{
+		APawn* ControlledPawn = GetPawn();
+
+		if (FollowTime <= ShortPressedThreshold && ControlledPawn)
+		{
+
+			UNavigationPath* NavPath = UNavigationSystemV1::FindPathToLocationSynchronously(this, ControlledPawn->GetActorLocation(), CachedDestination);
+			if (NavPath)
+			{
+				Spline->ClearSplinePoints();
+				for (const FVector& PointLoc : NavPath->PathPoints)
+				{
+					Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
+					DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Green, false, 5.f);
+				}
+				bAutoRunning = false;
+			}
+
+		}
+		FollowTime = 0.f;
+		bTargeting = false;
+	}
+
 }
 
 void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
