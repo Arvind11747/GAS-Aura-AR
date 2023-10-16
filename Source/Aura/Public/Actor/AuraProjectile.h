@@ -1,0 +1,34 @@
+// Copyright Voidpeak
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "AuraProjectile.generated.h"
+
+class USphereComponent;
+class UProjectileMovementComponent;
+
+UCLASS()
+class AURA_API AAuraProjectile : public AActor
+{
+	GENERATED_BODY()
+
+public:
+	AAuraProjectile();
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UProjectileMovementComponent> ProjectileMovement;
+
+protected:
+	virtual void BeginPlay() override;
+
+public:
+	UFUNCTION()
+	void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBody, bool bFromSweep, const FHitResult& SweepResult);
+
+private:
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USphereComponent> Sphere;
+
+};

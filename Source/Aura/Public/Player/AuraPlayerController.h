@@ -34,10 +34,11 @@ protected:
 	virtual void SetupInputComponent() override;
 private:
 
+	void CursorTrace();
 	IEnemyInterface* LastActor;
 	IEnemyInterface* ThisActor;
+	FHitResult CursorHit;
 
-	void CursorTrace();
 
 	UPROPERTY()
 	TObjectPtr<UAuraAbilitySystemComponent> AuraAbilitySystemComponent;
