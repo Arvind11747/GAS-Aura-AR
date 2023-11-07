@@ -22,4 +22,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<AAuraProjectile> ProjectileClass;
+
+	UFUNCTION(BlueprintCallable)
+	void SpawnProjectile();
+
+private:
 };

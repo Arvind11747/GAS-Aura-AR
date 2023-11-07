@@ -123,4 +123,10 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FString("Input tag for the number key 5")
 	);
 
+	//Event Tags
+	GameplayTags.Event_Monatage_FireBolt = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Event.Montage.FireBolt"),
+		FString("Event tag for the montage event Fire Bolt")
+	);
+
 }

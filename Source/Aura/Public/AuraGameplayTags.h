@@ -55,6 +55,8 @@ public:
 	FGameplayTag Inputs_Keyboard_4;
 	FGameplayTag Inputs_Keyboard_5;
 
+	//Event Tags
+	FGameplayTag Event_Monatage_FireBolt;
 
 private:
 	static FAuraGameplayTags GameplayTags;

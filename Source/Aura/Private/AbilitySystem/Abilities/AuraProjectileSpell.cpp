@@ -5,12 +5,17 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Interface/Interaction/CombatInterface.h"
 #include "Actor/AuraProjectile.h"
+#include "Abilities/Async/AbilityAsync_WaitGameplayEvent.h"
+#include "AuraGameplayTags.h"
 
 void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
+}
 
-	if (!HasAuthority(&ActivationInfo)) return;
+void UAuraProjectileSpell::SpawnProjectile()
+{
+	if (!GetAvatarActorFromActorInfo()->HasAuthority()) return;
 
 	ICombatInterface* CombatInterface = Cast<ICombatInterface>(GetAvatarActorFromActorInfo());
 	if (!CombatInterface) return;
@@ -33,6 +38,5 @@ void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 
 
 	Projectile->FinishSpawning(SpawnTransform);
-
 
 }
