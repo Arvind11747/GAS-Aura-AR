@@ -7,6 +7,8 @@
 #include "AuraProjectile.generated.h"
 
 class USphereComponent;
+class UNiagaraSystem;
+class USoundBase;
 class UProjectileMovementComponent;
 
 UCLASS()
@@ -22,13 +24,24 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-
+	virtual void Destroyed() override;
 public:
 	UFUNCTION()
 	void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBody, bool bFromSweep, const FHitResult& SweepResult);
 
 private:
+
+	bool bHit;
+
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USphereComponent> Sphere;
 
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UNiagaraSystem> ImpactEffect;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<USoundBase> ImpactSound;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<USoundBase> ProjectileSound;
 };
