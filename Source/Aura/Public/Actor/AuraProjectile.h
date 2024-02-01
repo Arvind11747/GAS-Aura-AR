@@ -10,6 +10,7 @@ class USphereComponent;
 class UNiagaraSystem;
 class USoundBase;
 class UProjectileMovementComponent;
+class UAudioComponent;
 
 UCLASS()
 class AURA_API AAuraProjectile : public AActor
@@ -44,4 +45,10 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<USoundBase> ProjectileSound;
+
+	UPROPERTY()
+	TObjectPtr<UAudioComponent> LoopingSoundComponent;
+
+	UPROPERTY(EditDefaultsOnly)
+	float ProjectileLifeSpan = 15.f;
 };
