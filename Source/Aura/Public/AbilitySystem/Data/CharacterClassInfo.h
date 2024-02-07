@@ -8,8 +8,10 @@
 
 class UGameplayEffect;
 
+UENUM(BlueprintType)
 enum class ECharacterClass : uint8
 {
+	None,
 	Elementalist,
 	Warrior,
 	Ranager
@@ -32,12 +34,15 @@ class AURA_API UCharacterClassInfo : public UDataAsset
 {
 	GENERATED_BODY()
 public:
-	TMap<ECharacterClass, FCharacterClassDefaultDataInfo> CharacterClassDefaultDataInfo;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Character Class Defaults")
+	TMap<ECharacterClass, FCharacterClassDefaultDataInfo> CharacterClassInformation;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Common Class Defaults")
 	TSubclassOf<UGameplayEffect> SecondaryAttributes;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Common Class Defaults")
 	TSubclassOf<UGameplayEffect> VitalAttributes;
 
-	FCharacterClassDefaultDataInfo GetCharacterClassInfo(ECharacterClass CharacterClass);
+	FCharacterClassDefaultDataInfo GetClassDefaultInfo(ECharacterClass CharacterClass);
 };
