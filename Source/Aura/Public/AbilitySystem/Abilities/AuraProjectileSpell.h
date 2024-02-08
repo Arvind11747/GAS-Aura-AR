@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AbilitySystem/Abilities/AuraGameplayAbility.h"
+#include "AbilitySystem/Abilities/AuraGameplayDamageAbility.h"
 #include "AuraProjectileSpell.generated.h"
 
 
@@ -12,7 +12,7 @@ class AAuraProjectile;
  *
  */
 UCLASS()
-class AURA_API UAuraProjectileSpell : public UAuraGameplayAbility
+class AURA_API UAuraProjectileSpell : public UAuraGameplayDamageAbility
 {
 	GENERATED_BODY()
 
