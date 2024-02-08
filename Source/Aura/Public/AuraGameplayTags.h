@@ -58,6 +58,9 @@ public:
 	//Event Tags
 	FGameplayTag Event_Monatage_FireBolt;
 
+	//Damage Tag
+	FGameplayTag Damage;
+
 private:
 	static FAuraGameplayTags GameplayTags;
 };

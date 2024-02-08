@@ -121,12 +121,17 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Inputs_Keyboard_5 = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Inputs.Keyboard.5"),
 		FString("Input tag for the number key 5")
-	);
 
+	);
 	//Event Tags
 	GameplayTags.Event_Monatage_FireBolt = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Event.Montage.FireBolt"),
 		FString("Event tag for the montage event Fire Bolt")
 	);
 
+	//Damage Tag
+	GameplayTags.Damage = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Damage"),
+		FString("Damage Caller Tag")
+	);
 }
