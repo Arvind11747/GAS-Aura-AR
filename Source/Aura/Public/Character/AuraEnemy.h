@@ -37,6 +37,13 @@ public:
 	FOnAttributeChangedSignature OnMaxHealthChanged;
 	/*End of Widget Controller*/
 
+	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
+
+	UPROPERTY(BlueprintReadOnly, Category = "Combat")
+	bool bHitReacting;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Character Movement")
+	float BaseWalkSpeed = 250.f;
 protected:
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo() override;
@@ -53,4 +60,5 @@ protected:
 private:
 
 	void BindCallbacksToDependencies();
+
 };

@@ -58,6 +58,9 @@ public:
 	//Event Tags
 	FGameplayTag Event_Monatage_FireBolt;
 
+	//Effect Tags
+	FGameplayTag Effects_HitReact;
+
 	//Damage Tag
 	FGameplayTag Damage;
 
