@@ -15,7 +15,7 @@
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)\
 
 USTRUCT()
-struct FEvaluatedData
+struct FEffectPropertyData
 {
 	GENERATED_BODY()
 
@@ -42,10 +42,10 @@ struct FEffectProperties
 	FGameplayEffectContextHandle EffectContextHandle;
 
 	UPROPERTY()
-	FEvaluatedData Source;
+	FEffectPropertyData Source;
 
 	UPROPERTY()
-	FEvaluatedData Target;
+	FEffectPropertyData Target;
 
 };
 

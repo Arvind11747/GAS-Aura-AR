@@ -33,13 +33,10 @@ void AAuraEnemy::BeginPlay()
 	Super::BeginPlay();
 	GetMesh()->SetRenderCustomDepth(false);
 	Weapon->SetRenderCustomDepth(false);
-
 	GetCharacterMovement()->MaxWalkSpeed = BaseWalkSpeed;
-
 	InitAbilityActorInfo();
-
 	BindCallbacksToDependencies();
-
+	UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
 }
 
 void AAuraEnemy::InitAbilityActorInfo()
