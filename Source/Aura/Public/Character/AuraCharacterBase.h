@@ -32,7 +32,13 @@ public:
 
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
+	/*Start of Combat Interface*/
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
+	virtual void Die() override;
+	/*End of Combat Interface*/
+
+	UFUNCTION(NetMulticast, Reliable)
+	virtual void MulticastHandleDeath();
 
 protected:
 	virtual void BeginPlay() override;
